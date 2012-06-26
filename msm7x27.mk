@@ -83,8 +83,7 @@ PRODUCT_PACKAGES += \
 # Misc
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory \
-    Superuser \
-    Torch
+    Superuser
 
 # Live Wallpapers
 PRODUCT_PACKAGES += \
