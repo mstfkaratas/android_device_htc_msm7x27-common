@@ -30,7 +30,7 @@ PRODUCT_COPY_FILES += \
     packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
 
 PRODUCT_COPY_FILES += \
-    device/htc/msm7x27-common/init.htc7x27.usb.rc:root/init.htc7x27.usb.rc
+    device/htc/msm7x27-common/init.msm7x27.usb.rc:root/init.msm7x27.usb.rc
 
 # Common msm7x27 firmware
 PRODUCT_COPY_FILES += \
