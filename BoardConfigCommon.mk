@@ -29,7 +29,6 @@ TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
 TARGET_CPU_ABI := armeabi-v6l
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv6-vfp
-ARCH_ARM_HAVE_TLS_REGISTER := true
 
 ### Kernel
 TARGET_KERNEL_SOURCE := kernel/htc/msm7227
@@ -105,3 +104,4 @@ JS_ENGINE := v8
 HTTP := chrome
 WITH_JIT := true
 ENABLE_JSC_JIT := true
+ENABLE_WEBGL := true
