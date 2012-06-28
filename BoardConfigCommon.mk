@@ -51,7 +51,6 @@ BOARD_WLAN_DEVICE_REV            := bcm4329
 WIFI_BAND                        := 802_11_ABG
 
 ### Graphics
-BOARD_USES_ADRENO_200 := true
 # Option for choosing texture target on old adrenos
 BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
 BOARD_EGL_CFG := device/htc/msm7x27-common/egl.cfg
