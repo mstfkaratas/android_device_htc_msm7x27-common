@@ -93,12 +93,16 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 20000
 ### HTC RIL
 BOARD_USE_NEW_LIBRIL_HTC := true
 
+### Dalvik
+# If WITH_JIT is configured, build multiple versions of libdvm.so to facilitate
+# correctness/performance bugs triage
+WITH_JIT := true
+
 ### Webkit
 TARGET_FORCE_CPU_UPLOAD := true
 
 ### Browser
 JS_ENGINE := v8
 HTTP := chrome
-WITH_JIT := true
 ENABLE_JSC_JIT := true
 ENABLE_WEBGL := true
