@@ -14,8 +14,6 @@
 
 TARGET_SPECIFIC_HEADER_PATH := device/htc/msm7x27-common/include
 
--include device/htc/msm7x27-common/BoardConfigCommon.mk
-
 # inherit from common msm7x27 Recovery
 -include device/htc/msm7x27-recovery/BoardConfigCommon.mk
 
