@@ -34,18 +34,9 @@ PRODUCT_COPY_FILES += \
 
 # Common msm7x27 firmware
 PRODUCT_COPY_FILES += \
-    device/htc/msm7x27-common/firmware/a225_pfp.fw:system/etc/firmware/a225_pfp.fw \
-    device/htc/msm7x27-common/firmware/a225_pm4.fw:system/etc/firmware/a225_pm4.fw \
-    device/htc/msm7x27-common/firmware/a225p5_pm4.fw:system/etc/firmware/a225p5_pm4.fw \
-    device/htc/msm7x27-common/firmware/a300_pfp.fw:system/etc/firmware/a300_pfp.fw \
-    device/htc/msm7x27-common/firmware/a300_pm4.fw:system/etc/firmware/a300_pm4.fw \
     device/htc/msm7x27-common/firmware/bcm4329.hcd:system/etc/firmware/bcm4329.hcd \
     device/htc/msm7x27-common/firmware/fw_bcm4329.bin:system/etc/firmware/fw_bcm4329.bin \
-    device/htc/msm7x27-common/firmware/fw_bcm4329_apsta.bin:system/etc/firmware/fw_bcm4329_apsta.bin \
-    device/htc/msm7x27-common/firmware/yamato_pfp.fw:system/etc/firmware/yamato_pfp.fw \
-    device/htc/msm7x27-common/firmware/yamato_pm4.fw:system/etc/firmware/yamato_pm4.fw \
-    device/htc/msm7x27-common/firmware/leia_pfp_470.fw:system/etc/firmware/leia_pfp_470.fw \
-    device/htc/msm7x27-common/firmware/leia_pm4_470.fw:system/etc/firmware/leia_pm4_470.fw
+    device/htc/msm7x27-common/firmware/fw_bcm4329_apsta.bin:system/etc/firmware/fw_bcm4329_apsta.bin
 
 # Audio
 PRODUCT_PACKAGES += \
