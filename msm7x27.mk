@@ -60,14 +60,6 @@ PRODUCT_PACKAGES += \
     libQcomUI \
     libtilerenderer
 
-# Lights
-PRODUCT_PACKAGES += \
-    lights.msm7x27
-
-# Sensors
-PRODUCT_PACKAGES += \
-    sensors.msm7x27
-
 # QCOM OMX
 PRODUCT_PACKAGES += \
     libstagefrighthw \
