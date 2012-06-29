@@ -32,8 +32,13 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
     packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
 
+# USB
 PRODUCT_COPY_FILES += \
     device/htc/msm7x27-common/init.msm7x27.usb.rc:root/init.msm7x27.usb.rc
+
+# Media
+PRODUCT_COPY_FILES += \
+    device/htc/msm7x27-common/media_profiles.xml:system/etc/media_profiles.xml
 
 # Common msm7x27 firmware
 PRODUCT_COPY_FILES += \
