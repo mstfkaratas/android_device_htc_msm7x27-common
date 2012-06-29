@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+DEVICE_PACKAGE_OVERLAYS := device/htc/msm7x27/overlay
+
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
