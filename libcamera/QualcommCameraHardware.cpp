@@ -75,7 +75,7 @@ extern "C" {
 #define DEFAULT_PICTURE_WIDTH  1024
 #define DEFAULT_PICTURE_HEIGHT 768
 #define THUMBNAIL_BUFFER_SIZE (THUMBNAIL_WIDTH * THUMBNAIL_HEIGHT * 3/2)
-#define MAX_ZOOM_LEVEL 20
+#define MAX_ZOOM_LEVEL 40
 #define NOT_FOUND -1
 // Number of video buffers held by kernal (initially 1,2 &3)
 #define ACTIVE_VIDEO_BUFFERS 3
@@ -168,8 +168,8 @@ union zoomimage
 } zoomImage;
 
 //Default to VGA
-#define DEFAULT_PREVIEW_WIDTH 384
-#define DEFAULT_PREVIEW_HEIGHT 288
+#define DEFAULT_PREVIEW_WIDTH 640
+#define DEFAULT_PREVIEW_HEIGHT 480
 
 /*
  * Modifying preview size requires modification
@@ -316,7 +316,6 @@ static const str_map whitebalance[] = {
     { CameraParameters::WHITE_BALANCE_CLOUDY_DAYLIGHT, CAMERA_WB_CLOUDY_DAYLIGHT }
 };
 
-#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
 // from camera_effect_t. This list must match aeecamera.h
 static const str_map effects[] = {
     { CameraParameters::EFFECT_NONE,       CAMERA_EFFECT_OFF },
@@ -329,7 +328,6 @@ static const str_map effects[] = {
     { CameraParameters::EFFECT_BLACKBOARD, CAMERA_EFFECT_BLACKBOARD },
     { CameraParameters::EFFECT_AQUA,       CAMERA_EFFECT_AQUA }
 };
-#endif
 
 // from qcamera/common/camera.h
 static const str_map autoexposure[] = {
@@ -644,9 +642,7 @@ static bool parameter_string_initialized = false;
 static String8 preview_size_values;
 static String8 picture_size_values;
 static String8 antibanding_values;
-#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
 static String8 effect_values;
-#endif
 static String8 autoexposure_values;
 static String8 whitebalance_values;
 static String8 flash_values;
@@ -702,8 +698,8 @@ static String8 create_values_range_str(int min, int max){
 
 static const char *cam_ctrl_type_to_str(cam_ctrl_type type) {
     switch (type) {
-        case CAMERA_SET_PARM_ENCODE_ROTATION:
-            return "CAMERA_SET_PARM_ENCODE_ROTATION";
+        case CAMERA_SET_PARM_DISPLAY_INFO:
+            return "CAMERA_SET_PARM_DISPLAY_INFO";
         case CAMERA_SET_PARM_DIMENSION:
             return "CAMERA_SET_PARM_DIMENSION";
         case CAMERA_SET_PARM_ZOOM:
@@ -780,10 +776,6 @@ static const char *cam_ctrl_type_to_str(cam_ctrl_type type) {
             return "CAMERA_SET_PARM_LED_MODE";
         case CAMERA_SET_MOTION_ISO:
             return "CAMERA_SET_MOTION_ISO";
-        case CAMERA_SET_FPS_MODE:
-            return "CAMERA_SET_FPS_MODE";
-        case CAMERA_SET_PARM_SCENE_MODE:
-            return "CAMERA_SET_PARM_SCENE_MODE";
         case CAMERA_ENABLE_AFD:
             return "CAMERA_ENABLE_AFD";
     }
@@ -1083,10 +1075,8 @@ void QualcommCameraHardware::initDefaultParameters()
         findSensorType();
         antibanding_values = create_values_str(
             antibanding, sizeof(antibanding) / sizeof(str_map));
-#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
         effect_values = create_values_str(
             effects, sizeof(effects) / sizeof(str_map));
-#endif
         autoexposure_values = create_values_str(
             autoexposure, sizeof(autoexposure) / sizeof(str_map));
         whitebalance_values = create_values_str(
@@ -1153,7 +1143,7 @@ void QualcommCameraHardware::initDefaultParameters()
     mParameters.set(CameraParameters::KEY_JPEG_THUMBNAIL_QUALITY, "90");
 
     mParameters.set(CameraParameters::KEY_ANTIBANDING,
-                    CameraParameters::ANTIBANDING_OFF);
+                    CameraParameters::ANTIBANDING_AUTO);
     mParameters.set(CameraParameters::KEY_EFFECT,
                     CameraParameters::EFFECT_NONE);
     mParameters.set(CameraParameters::KEY_AUTO_EXPOSURE,
@@ -1172,9 +1162,7 @@ void QualcommCameraHardware::initDefaultParameters()
                     picture_size_values.string());
     mParameters.set(CameraParameters::KEY_SUPPORTED_ANTIBANDING,
                     antibanding_values);
-#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
     mParameters.set(CameraParameters::KEY_SUPPORTED_EFFECTS, effect_values);
-#endif
     mParameters.set(CameraParameters::KEY_SUPPORTED_AUTO_EXPOSURE, autoexposure_values);
     mParameters.set(CameraParameters::KEY_SUPPORTED_WHITE_BALANCE,
                     whitebalance_values);
@@ -1190,17 +1178,17 @@ void QualcommCameraHardware::initDefaultParameters()
                         flash_values);
     }
 
-    /*mParameters.set(CameraParameters::KEY_MAX_SHARPNESS,
-            CAMERA_MAX_SHARPNESS);*/
+    mParameters.set(CameraParameters::KEY_MAX_SHARPNESS,
+            CAMERA_MAX_SHARPNESS);
     mParameters.set(CameraParameters::KEY_MAX_CONTRAST,
             CAMERA_MAX_CONTRAST);
     mParameters.set(CameraParameters::KEY_MAX_SATURATION,
             CAMERA_MAX_SATURATION);
 
-    /*mParameters.set("sharpness-max",
-            CAMERA_MAX_SHARPNESS);*/
-    /*mParameters.set("sharpness-def",
-            CAMERA_DEF_SHARPNESS);*/
+    mParameters.set("sharpness-max",
+            CAMERA_MAX_SHARPNESS);
+    mParameters.set("sharpness-def",
+            CAMERA_DEF_SHARPNESS);
     mParameters.set("contrast-max",
             CAMERA_MAX_CONTRAST);
     mParameters.set("contrast-def",
@@ -1225,8 +1213,8 @@ void QualcommCameraHardware::initDefaultParameters()
     mParameters.set(CameraParameters::KEY_PICTURE_FORMAT,
                     CameraParameters::PIXEL_FORMAT_JPEG);
 
-    /*mParameters.set(CameraParameters::KEY_SHARPNESS,
-                    CAMERA_DEF_SHARPNESS);*/
+    mParameters.set(CameraParameters::KEY_SHARPNESS,
+                    CAMERA_DEF_SHARPNESS);
     mParameters.set(CameraParameters::KEY_CONTRAST,
                     CAMERA_DEF_CONTRAST);
     mParameters.set(CameraParameters::KEY_SATURATION,
@@ -1250,6 +1238,16 @@ void QualcommCameraHardware::initDefaultParameters()
         mParameters.set(CameraParameters::KEY_SUPPORTED_LENSSHADE_MODES,
                     lensshade_values);
     }*/
+
+    if (native_get_maxzoom(mCameraControlFd, (void *)&mMaxZoom) == true){
+        LOGD("Maximum zoom value is %d", mMaxZoom);
+        mParameters.set("zoom-supported", "true");
+    } else {
+        LOGV("Failed to get maximum zoom value...setting max zoom to zero");
+        mParameters.set("zoom-supported", "false");
+        mMaxZoom = 0;
+    }
+    mParameters.set("max-zoom",mMaxZoom);
 
     if (setParameters(mParameters) != NO_ERROR) {
         LOGV("Failed to set default parameters?!");
@@ -1694,6 +1692,7 @@ static bool native_stop_snapshot (int camfd)
  *
  * DESCRIPTION:
  *==========================================================================*/
+#if 0
 static bool native_start_recording(int camfd)
 {
     int ret;
@@ -1742,11 +1741,14 @@ static bool native_stop_recording(int camfd)
     LOGV("in native_stop_recording returned %d", ret);
     return true;
 }
+#endif
+
 /*===========================================================================
  * FUNCTION    - native_start_video -
  *
  * DESCRIPTION:
  *==========================================================================*/
+#if 0
 static bool native_start_video(int camfd)
 {
     int ret;
@@ -1794,6 +1796,8 @@ static bool native_stop_video(int camfd)
 
     return true;
 }
+#endif
+
 /*==========================================================================*/
 
 static cam_frame_start_parms frame_parms;
@@ -2673,13 +2677,6 @@ status_t QualcommCameraHardware::startPreviewInternal()
 
     {
         Mutex::Autolock cameraRunningLock(&mCameraRunningLock);
-#if 0
-        if((mCurrentTarget != TARGET_MSM7630) &&
-           (mCurrentTarget != TARGET_QSD8250))
-            mCameraRunning = native_start_preview(mCameraControlFd);
-        else
-            mCameraRunning = native_start_video(mCameraControlFd);
-#endif
         mCameraRunning = native_start_preview(mCameraControlFd);
     }
 
@@ -2693,18 +2690,8 @@ status_t QualcommCameraHardware::startPreviewInternal()
 
     LOGV("native_start_preview success");
 
-    //Reset the Gps Information
+    // Reset the Gps Information
     exif_table_numEntries = 0;
-
-    if(native_get_maxzoom(mCameraControlFd, (void *)&mMaxZoom) == true){
-        LOGD("Maximum zoom value is %d", mMaxZoom);
-        mParameters.set("zoom-supported", "true");
-    } else {
-        LOGV("Failed to get maximum zoom value...setting max zoom to zero");
-        mParameters.set("zoom-supported", "false");
-        mMaxZoom = 0;
-    }
-    mParameters.set("max-zoom",mMaxZoom);
 
     LOGV("startPreviewInternal X");
     return NO_ERROR;
@@ -2732,11 +2719,7 @@ void QualcommCameraHardware::stopPreviewInternal()
         {
             Mutex::Autolock cameraRunningLock(&mCameraRunningLock);
             if(!camframe_timeout_flag) {
-                if (( mCurrentTarget != TARGET_MSM7630 ) &&
-                        (mCurrentTarget != TARGET_QSD8250))
-                    mCameraRunning = !native_stop_preview(mCameraControlFd);
-                else
-                    mCameraRunning = !native_stop_video(mCameraControlFd);
+                mCameraRunning = !native_stop_preview(mCameraControlFd);
             } else {
                 /* This means that the camframetimeout was issued.
                  * But we did not issue native_stop_preview(), so we
@@ -3144,15 +3127,13 @@ status_t QualcommCameraHardware::setParameters(const CameraParameters& params)
     status_t rc, final_rc = NO_ERROR;
 
     if ((rc = setPreviewSize(params))) final_rc = rc;
+#if 0 /* FIXME GURU: this doesn't succeed */
     if ((rc = setPreviewFrameRate(params))) final_rc = rc;
+#endif
     if ((rc = setPictureSize(params)))  final_rc = rc;
     if ((rc = setJpegQuality(params)))  final_rc = rc;
     if ((rc = setAntibanding(params)))  final_rc = rc;
-    if ((rc = setAutoExposure(params))) final_rc = rc;
-#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
     if ((rc = setWhiteBalance(params))) final_rc = rc;
-    if ((rc = setEffect(params)))       final_rc = rc;
-#endif
     if ((rc = setFlash(params)))        final_rc = rc;
     if ((rc = setGpsLocation(params)))  final_rc = rc;
     if ((rc = setRotation(params)))     final_rc = rc;
@@ -3160,20 +3141,22 @@ status_t QualcommCameraHardware::setParameters(const CameraParameters& params)
     if ((rc = setFocusMode(params)))    final_rc = rc;
     if ((rc = setOrientation(params)))  final_rc = rc;
     if ((rc = setBrightness(params)))   final_rc = rc;
-    if ((rc = setExposureCompensation(params)))   final_rc = rc;
-    //if ((rc = setLensshadeValue(params)))  final_rc = rc;
+    if ((rc = setAutoExposure(params))) final_rc = rc;
+#if 0 /* GURU: not supported by htc liboemcamera */
+    if ((rc = setLensshadeValue(params)))  final_rc = rc;
+#endif
     if ((rc = setISOValue(params)))  final_rc = rc;
+    if ((rc = setExposureCompensation(params)))   final_rc = rc;
     if ((rc = setPictureFormat(params))) final_rc = rc;
-    //if ((rc = setSharpness(params)))    final_rc = rc;
     if ((rc = setContrast(params)))     final_rc = rc;
-#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
+#if 0
+    if ((rc = setEffect(params)))       final_rc = rc;
     if ((rc = setSaturation(params)))   final_rc = rc;
+    if ((rc = setSharpness(params)))    final_rc = rc;
 #endif
 
-    LOGV("setParameters: X");
-    //return final_rc;
-    /* Just let whatever passed go through */
-    return NO_ERROR;
+    LOGV("setParameters: X, final_rc=%d", final_rc);
+    return final_rc;
 }
 
 CameraParameters QualcommCameraHardware::getParameters() const
@@ -3525,6 +3508,7 @@ status_t QualcommCameraHardware::startRecording()
     Mutex::Autolock l(&mLock);
     mReleasedRecordingFrame = false;
     if( (ret=startPreviewInternal())== NO_ERROR){
+#if 0
         if( ( mCurrentTarget == TARGET_MSM7630 ) || (mCurrentTarget == TARGET_QSD8250) )  {
             LOGV(" in startREcording : calling native_start_recording");
             native_start_recording(mCameraControlFd);
@@ -3555,6 +3539,7 @@ status_t QualcommCameraHardware::startRecording()
             mVideoThreadWaitLock.unlock();
             // Remove the left out frames in busy Q and them in free Q.
         }
+#endif
     }
     return ret;
 }
@@ -3575,19 +3560,7 @@ void QualcommCameraHardware::stopRecording()
             return;
         }
     }
-    // If output2 enabled, exit video thread, invoke stop recording ioctl
-    if( ( mCurrentTarget == TARGET_MSM7630 ) || (mCurrentTarget == TARGET_QSD8250))  {
-        mVideoThreadWaitLock.lock();
-        mVideoThreadExit = 1;
-        mVideoThreadWaitLock.unlock();
-        native_stop_recording(mCameraControlFd);
-
-        pthread_mutex_lock(&(g_busy_frame_queue.mut));
-        pthread_cond_signal(&(g_busy_frame_queue.wait));
-        pthread_mutex_unlock(&(g_busy_frame_queue.mut));
-    }
-    else  // for other targets where output2 is not enabled
-        stopPreviewInternal();
+    stopPreviewInternal();
 
     recordingState = 0; // recording not started
     LOGV("stopRecording: X");
@@ -3928,18 +3901,21 @@ status_t QualcommCameraHardware::setPreviewFrameRate(const CameraParameters& par
 
     if(MINIMUM_FPS <= fps && fps <=MAXIMUM_FPS){
         mParameters.setPreviewFrameRate(fps);
+
         bool ret = native_set_parm(CAMERA_SET_PARM_FPS,
                 sizeof(fps), (void *)&fps);
+
         return ret ? NO_ERROR : UNKNOWN_ERROR;
     }
-    return BAD_VALUE;
 
+    return BAD_VALUE;
 }
 
 status_t QualcommCameraHardware::setPictureSize(const CameraParameters& params)
 {
     int width, height;
     params.getPictureSize(&width, &height);
+
     LOGV("requested picture size %d x %d", width, height);
 
     // Validate the picture size
@@ -3991,7 +3967,6 @@ status_t QualcommCameraHardware::setJpegQuality(const CameraParameters& params) 
     return rc;
 }
 
-#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
 status_t QualcommCameraHardware::setEffect(const CameraParameters& params)
 {
 
@@ -4027,7 +4002,6 @@ status_t QualcommCameraHardware::setEffect(const CameraParameters& params)
     LOGV("Invalid effect value: %s", (str == NULL) ? "NULL" : str);
     return BAD_VALUE;
 }
-#endif
 
 status_t QualcommCameraHardware::setAutoExposure(const CameraParameters& params)
 {
@@ -4038,18 +4012,25 @@ status_t QualcommCameraHardware::setAutoExposure(const CameraParameters& params)
     const char *str = params.get(CameraParameters::KEY_AUTO_EXPOSURE);
     if (str != NULL) {
         int32_t value = attr_lookup(autoexposure, sizeof(autoexposure) / sizeof(str_map), str);
+
+        LOGV("setAutoExposure %s", str);
+
         if (value != NOT_FOUND) {
             mParameters.set(CameraParameters::KEY_AUTO_EXPOSURE, str);
-            bool ret = native_set_parm(CAMERA_SET_PARM_EXPOSURE, sizeof(value),
+
+            bool ret = native_set_parm(CAMERA_SET_PARM_EXPOSURE,
+                                       sizeof(value),
                                        (void *)&value);
             return ret ? NO_ERROR : UNKNOWN_ERROR;
         }
     }
+
     LOGV("Invalid auto exposure value: %s", (str == NULL) ? "NULL" : str);
+
     return BAD_VALUE;
 }
 
-/*status_t QualcommCameraHardware::setSharpness(const CameraParameters& params)
+status_t QualcommCameraHardware::setSharpness(const CameraParameters& params)
 {
     if(!strcmp(sensorType->name, "2mp")) {
         LOGV("Sharpness not supported for this sensor");
@@ -4065,7 +4046,7 @@ status_t QualcommCameraHardware::setAutoExposure(const CameraParameters& params)
     bool ret = native_set_parm(CAMERA_SET_PARM_SHARPNESS, sizeof(sharpness),
                                (void *)&sharpness);
     return ret ? NO_ERROR : UNKNOWN_ERROR;
-}*/
+}
 
 status_t QualcommCameraHardware::setContrast(const CameraParameters& params)
 {
@@ -4078,14 +4059,13 @@ status_t QualcommCameraHardware::setContrast(const CameraParameters& params)
             || (contrast > CAMERA_MAX_CONTRAST))
         return UNKNOWN_ERROR;
 
-    LOGV("setting contrast %d", contrast);
+    LOGV("setContrast %d", contrast);
     mParameters.set(CameraParameters::KEY_CONTRAST, contrast);
     bool ret = native_set_parm(CAMERA_SET_PARM_CONTRAST, sizeof(contrast),
                                (void *)&contrast);
     return ret ? NO_ERROR : UNKNOWN_ERROR;
 }
 
-#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
 status_t QualcommCameraHardware::setSaturation(const CameraParameters& params)
 {
     if(!strcmp(sensorType->name, "2mp")) {
@@ -4115,41 +4095,45 @@ status_t QualcommCameraHardware::setSaturation(const CameraParameters& params)
 	return NO_ERROR;
     }
 }
-#endif
 
 status_t QualcommCameraHardware::setBrightness(const CameraParameters& params) {
-        int brightness = params.getInt("luma-adaptation");
-        if (mBrightness !=  brightness) {
-            LOGV(" new brightness value : %d ", brightness);
-            mBrightness =  brightness;
+    int brightness = params.getInt("luma-adaptation");
 
-            bool ret = native_set_parm(CAMERA_SET_PARM_BRIGHTNESS, sizeof(mBrightness),
-                                       (void *)&mBrightness);
-            return ret ? NO_ERROR : UNKNOWN_ERROR;
-        } else {
-            return NO_ERROR;
-        }
+    if (mBrightness != brightness) {
+        LOGV("setBrightness %d", brightness);
+        mBrightness =  brightness;
+
+        bool ret = native_set_parm(CAMERA_SET_PARM_BRIGHTNESS, sizeof(mBrightness),
+                (void *)&mBrightness);
+        return ret ? NO_ERROR : UNKNOWN_ERROR;
+    }
+
+    return NO_ERROR;
 }
 
 status_t QualcommCameraHardware::setExposureCompensation(const CameraParameters& params) {
         int expcomp = params.getInt("exposure-compensation");
 
-	mParameters.set(CameraParameters::KEY_EXPOSURE_COMPENSATION, expcomp);
+        mParameters.set(CameraParameters::KEY_EXPOSURE_COMPENSATION, expcomp);
 
-	if(!strcmp(sensorType->name, "3mp"))
-	  expcomp+=4;
-	else
-	  expcomp+=2;
+#if 0
+        if (!strcmp(sensorType->name, "3mp")) {
+            expcomp += 4;
+        } else {
+            expcomp += 2;
+        }
+#endif
 
-        bool ret = native_set_parm(CAMERA_SET_PARM_EXPOSURE_COMPENSATION, sizeof(expcomp),
-                                       (void *)&expcomp);
+        LOGV("setExposureCompensation %d", expcomp);
+
+        bool ret = native_set_parm(CAMERA_SET_PARM_EXPOSURE_COMPENSATION,
+                                   sizeof(expcomp),
+                                   (void *)&expcomp);
         return ret ? NO_ERROR : UNKNOWN_ERROR;
 }
 
-#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
 status_t QualcommCameraHardware::setWhiteBalance(const CameraParameters& params)
 {
-
     const char *str_effect = mParameters.get(CameraParameters::KEY_EFFECT);
     int32_t value_effect = attr_lookup(effects, sizeof(effects) / sizeof(str_map), str_effect);
 
@@ -4157,8 +4141,10 @@ status_t QualcommCameraHardware::setWhiteBalance(const CameraParameters& params)
     && (value_effect != CAMERA_EFFECT_AQUA) && (value_effect != CAMERA_EFFECT_SEPIA)) {
         const char *str = params.get(CameraParameters::KEY_WHITE_BALANCE);
 
+        LOGV("setWhiteBalance %s", str);
         if (str != NULL) {
             int32_t value = attr_lookup(whitebalance, sizeof(whitebalance) / sizeof(str_map), str);
+
             if (value != NOT_FOUND) {
                 mParameters.set(CameraParameters::KEY_WHITE_BALANCE, str);
                 bool ret = native_set_parm(CAMERA_SET_PARM_WB, sizeof(value),
@@ -4174,7 +4160,6 @@ status_t QualcommCameraHardware::setWhiteBalance(const CameraParameters& params)
             return NO_ERROR;
     }
 }
-#endif
 
 status_t QualcommCameraHardware::setFlash(const CameraParameters& params)
 {
@@ -4186,6 +4171,9 @@ status_t QualcommCameraHardware::setFlash(const CameraParameters& params)
     const char *str = params.get(CameraParameters::KEY_FLASH_MODE);
     if (str != NULL) {
         int32_t value = attr_lookup(flash, sizeof(flash) / sizeof(str_map), str);
+
+        LOGV("setFlash %d", value);
+
         if (value != NOT_FOUND) {
             mParameters.set(CameraParameters::KEY_FLASH_MODE, str);
             bool ret = native_set_parm(CAMERA_SET_PARM_LED_MODE,
@@ -4203,15 +4191,18 @@ status_t QualcommCameraHardware::setAntibanding(const CameraParameters& params)
         LOGV("Parameter AntiBanding is not supported for this sensor");
         return NO_ERROR;
     }
-    return NO_ERROR;
     const char *str = params.get(CameraParameters::KEY_ANTIBANDING);
+
     if (str != NULL) {
         int value = (camera_antibanding_type)attr_lookup(
           antibanding, sizeof(antibanding) / sizeof(str_map), str);
+
+        LOGV("setAnitbanding %s", str);
         if (value != NOT_FOUND) {
             camera_antibanding_type temp = (camera_antibanding_type) value;
             mParameters.set(CameraParameters::KEY_ANTIBANDING, str);
             bool ret;
+#if 0
             if (temp == CAMERA_ANTIBANDING_AUTO) {
                 ret = native_set_parm(CAMERA_ENABLE_AFD,
                             0, NULL);
@@ -4219,6 +4210,10 @@ status_t QualcommCameraHardware::setAntibanding(const CameraParameters& params)
                 ret = native_set_parm(CAMERA_SET_PARM_ANTIBANDING,
                             sizeof(camera_antibanding_type), (void *)&temp);
             }
+#endif
+            ret = native_set_parm(CAMERA_SET_PARM_ANTIBANDING,
+                                  sizeof(camera_antibanding_type),
+                                  (void *)&temp);
             return ret ? NO_ERROR : UNKNOWN_ERROR;
         }
     }
@@ -4253,7 +4248,10 @@ status_t QualcommCameraHardware::setAntibanding(const CameraParameters& params)
 status_t  QualcommCameraHardware::setISOValue(const CameraParameters& params) {
     int8_t temp_hjr;
     const char *str = params.get(CameraParameters::KEY_ISO_MODE);
+
     if (str != NULL) {
+        LOGV("setISO %s", str);
+
         int value = (camera_iso_mode_type)attr_lookup(
           iso, sizeof(iso) / sizeof(str_map), str);
         if (value != NOT_FOUND) {
@@ -4361,12 +4359,13 @@ status_t QualcommCameraHardware::setZoom(const CameraParameters& params)
     static const int ZOOM_STEP = 1;
     int32_t zoom_level = params.getInt("zoom");
 
-    LOGV("Set zoom=%d", zoom_level);
+    LOGV("setZoom %d %d", zoom_level, mMaxZoom);
     if(zoom_level >= 0 && zoom_level <= mMaxZoom) {
         mParameters.set("zoom", zoom_level);
         int32_t zoom_value = ZOOM_STEP * zoom_level;
         bool ret = native_set_parm(CAMERA_SET_PARM_ZOOM,
-            sizeof(zoom_value), (void *)&zoom_value);
+                                   sizeof(zoom_value),
+                                   (void *)&zoom_value);
         rc = ret ? NO_ERROR : UNKNOWN_ERROR;
     } else {
         LOGE("setZoom: bad zoom level value");
@@ -4639,10 +4638,12 @@ static bool register_buf(int camfd,
     pmemBuf.vaddr    = buf;
     pmemBuf.y_off    = 0;
 
-    if(pmem_type == MSM_PMEM_RAW_MAINIMG)
+    if (pmem_type == MSM_PMEM_RAW_MAINIMG) {
         pmemBuf.cbcr_off = 0;
-    else
-        pmemBuf.cbcr_off = PAD_TO_WORD(frame_size * 2 / 3);
+    } else {
+        pmemBuf.cbcr_off = PAD_TO_WORD(frame_size);
+        //pmemBuf.cbcr_off = PAD_TO_WORD(frame_size * 2 / 3);
+    }
 
     pmemBuf.vfe_can_write   = vfe_can_write;
 
