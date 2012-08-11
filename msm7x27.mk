@@ -38,6 +38,7 @@ PRODUCT_COPY_FILES += \
 
 # Media
 PRODUCT_COPY_FILES += \
+    device/htc/msm7x27-common/media_codecs.xml:system/etc/media_codecs.xml \
     device/htc/msm7x27-common/media_profiles.xml:system/etc/media_profiles.xml
 
 # Common msm7x27 firmware
@@ -49,21 +50,23 @@ PRODUCT_COPY_FILES += \
 # Audio
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
-    audio_policy.msm7x27 \
     audio.primary.msm7x27 \
     libtinyalsa \
     libaudioutils
+# Won't build from source yet
+#    audio_policy.msm7x27 \
 
 # Video
 PRODUCT_PACKAGES += \
     copybit.msm7x27 \
     gralloc.msm7x27 \
-    hwcomposer.msm7x27 \
     libgenlock \
     libmemalloc \
     liboverlay \
-    libQcomUI \
+    libqdutils \
     libtilerenderer
+# Video playback is broken with hwcomposer enabled (it's trying to open /dev/msm_rotator)
+#    hwcomposer.msm7x27 \
 
 # QCOM OMX
 PRODUCT_PACKAGES += \
