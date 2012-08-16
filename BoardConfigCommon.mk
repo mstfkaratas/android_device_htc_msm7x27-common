@@ -76,8 +76,6 @@ BOARD_USES_GENERIC_AUDIO := false
 BOARD_PREBUILT_LIBAUDIO := false
 BOARD_USES_QCOM_AUDIO_VOIPMUTE := true
 BOARD_USES_QCOM_AUDIO_RESETALL := true
-# Prebuilt ICS audio blob - remove once audio_policy can be built from source
-COMMON_GLOBAL_CFLAGS += -DICS_AUDIO_BLOB
 
 ### Bluetooth
 BOARD_HAVE_BLUETOOTH := true

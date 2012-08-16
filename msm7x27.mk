@@ -50,11 +50,10 @@ PRODUCT_COPY_FILES += \
 # Audio
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
+    audio_policy.msm7x27 \
     audio.primary.msm7x27 \
     libtinyalsa \
     libaudioutils
-# Won't build from source yet
-#    audio_policy.msm7x27 \
 
 # Video
 PRODUCT_PACKAGES += \
