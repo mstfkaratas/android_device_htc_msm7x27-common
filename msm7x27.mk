@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-DEVICE_PACKAGE_OVERLAYS := device/htc/msm7x27-common/overlay
+DEVICE_PACKAGE_OVERLAYS += device/htc/msm7x27-common/overlay
 
 # Permissions
 PRODUCT_COPY_FILES += \
