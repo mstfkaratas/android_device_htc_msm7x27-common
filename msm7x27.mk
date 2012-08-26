@@ -59,13 +59,12 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     copybit.msm7x27 \
     gralloc.msm7x27 \
+    hwcomposer.msm7x27 \
     libgenlock \
     libmemalloc \
     liboverlay \
     libqdutils \
     libtilerenderer
-# Video playback is broken with hwcomposer enabled (it's trying to open /dev/msm_rotator)
-#    hwcomposer.msm7x27 \
 
 # QCOM OMX
 PRODUCT_PACKAGES += \
