@@ -77,11 +77,6 @@ PRODUCT_PACKAGES += \
     com.android.future.usb.accessory \
     Superuser
 
-# Live Wallpapers
-PRODUCT_PACKAGES += \
-    VisualizationWallpapers \
-    librs_jni
-
 # Filesystem management tools
 PRODUCT_PACKAGES += \
     make_ext4fs \
