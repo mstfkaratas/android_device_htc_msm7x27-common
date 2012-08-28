@@ -86,6 +86,57 @@ PRODUCT_PACKAGES += \
     make_ext4fs \
     setup_fs
 
+# RIL
+PRODUCT_PROPERTY_OVERRIDES += \
+    rild.libpath=/system/lib/libhtc_ril.so \
+    ro.ril.enable.dtm=1 \
+    ro.ril.hsdpa.category=8 \
+    ro.ril.hsupa.category=5 \
+    ro.ril.disable.fd.plmn.prefix=23402,23410,23411 \
+    ro.ril.def.agps.mode=2 \
+    ro.ril.hsxpa=2 \
+    ro.ril.gprsclass=12 \
+    ro.telephony.ril.v3=signalstrength
+
+# Interfaces
+PRODUCT_PROPERTY_OVERRIDES += \
+    mobiledata.interfaces=rmnet0,rmnet1,rmnet2,gprs,ppp0 \
+    wifi.interface=wlan0 \
+    wifi.supplicant_scan_interval=15
+
+# Graphics
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.sf.lcd_density=160 \
+    ro.opengles.version=131072 \
+    debug.sf.hw=1 \
+    debug.qctwa.statusbar=1 \
+    debug.qctwa.preservebuf=1 \
+    com.qc.hardware=true \
+    com.qc.hdmi_out=false
+
+# Camera
+PRODUCT_PROPERTY_OVERRIDES += \
+    debug.camcorder.disablemeta=1
+
+# For emmc phone storage
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.phone_storage=0
+
+# Misc
+PRODUCT_PROPERTY_OVERRIDES += \
+    settings.display.autobacklight=1 \
+    settings.display.brightness=143 \
+    persist.service.mount.playsnd=0 \
+    ro.com.google.locationfeatures=1 \
+    ro.setupwizard.mode=OPTIONAL \
+    ro.setupwizard.enable_bypass=1 \
+    ro.media.dec.aud.wma.enabled=1 \
+    ro.media.dec.vid.wmv.enabled=1 \
+    dalvik.vm.dexopt-flags=m=y \
+    ro.config.sync=yes \
+    persist.sys.usb.config=mass_storage,adb \
+    dalvik.vm.dexopt-data-only=1
+
 # We have enough storage space to hold precise GC data
 #PRODUCT_TAGS += dalvik.gc.type-precise
 
