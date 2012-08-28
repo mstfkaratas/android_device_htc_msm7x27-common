@@ -66,6 +66,10 @@ PRODUCT_PACKAGES += \
     libqdutils \
     libtilerenderer
 
+# Camera
+PRODUCT_PACKAGES += \
+    camera.msm7x27
+
 # QCOM OMX
 PRODUCT_PACKAGES += \
     libstagefrighthw \
