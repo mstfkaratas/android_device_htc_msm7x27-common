@@ -78,6 +78,7 @@ PRODUCT_PACKAGES += \
 
 # Misc
 PRODUCT_PACKAGES += \
+    lights.msm7x27 \
     com.android.future.usb.accessory \
     Superuser
 
