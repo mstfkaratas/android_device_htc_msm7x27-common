@@ -77,6 +77,10 @@ PRODUCT_PACKAGES += \
     com.android.future.usb.accessory \
     Superuser
 
+### Add system daemons
+PRODUCT_PACKAGES += \
+    rild
+
 # Filesystem management tools
 PRODUCT_PACKAGES += \
     make_ext4fs \
