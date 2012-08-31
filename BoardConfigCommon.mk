@@ -28,6 +28,8 @@ TARGET_CPU_ABI := armeabi-v6l
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv6-vfp
 
+TARGET_PROVIDES_LIBLIGHTS := true
+
 ### Kernel
 TARGET_KERNEL_SOURCE := kernel/htc/msm7227
 TARGET_KERNEL_CONFIG := cyanogen_msm7227_defconfig
