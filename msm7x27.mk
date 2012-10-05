@@ -117,6 +117,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.sf.hw=1 \
     debug.qctwa.statusbar=1 \
     debug.qctwa.preservebuf=1 \
+    debug.hwui.render_dirty_regions=false \
     com.qc.hardware=true \
     com.qc.hdmi_out=false
 
