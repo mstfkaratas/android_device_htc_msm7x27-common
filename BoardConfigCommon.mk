@@ -57,7 +57,7 @@ WIFI_BAND                        := 802_11_ABG
 BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
 BOARD_EGL_CFG := device/htc/msm7x27-common/egl.cfg
 
-COMMON_GLOBAL_CFLAGS += -DREFRESH_RATE=60 -DQCOM_HARDWARE
+COMMON_GLOBAL_CFLAGS += -DREFRESH_RATE=60 -DQCOM_HARDWARE -DQCOM_NO_SECURE_PLAYBACK
 USE_OPENGL_RENDERER := true
 TARGET_USES_C2D_COMPOSITION := false
 TARGET_USES_SF_BYPASS := false
@@ -66,13 +66,10 @@ TARGET_USES_OVERLAY := false
 TARGET_QCOM_HDMI_OUT := false
 TARGET_GRALLOC_USES_ASHMEM := false
 TARGET_USES_GENLOCK := true
-# Backwards compatibility with ICS GPU drivers
-# Remove when (and if) Qualcomm releases Jelly Bean drivers for ARMv6
-COMMON_GLOBAL_CFLAGS += -DQCOM_ICS_COMPAT
-# Disable HW VSYNC, kernel does not support it (yet)
+# Disable HW VSYNC, kernel does not support it
 TARGET_NO_HW_VSYNC := true
-
-COMMON_GLOBAL_CFLAGS += -DQCOM_MISSING_PIXEL_FORMATS -DQCOM_NO_SECURE_PLAYBACK
+# Some pixel formats aren't supported. Commit used with this flag: http://goo.gl/z4F7M
+COMMON_GLOBAL_CFLAGS += -DQCOM_MISSING_PIXEL_FORMATS
 
 ### Camera
 BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
