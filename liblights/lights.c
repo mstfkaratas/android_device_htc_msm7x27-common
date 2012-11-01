@@ -42,6 +42,10 @@ char const*const GREEN_LED_FILE = "/sys/class/leds/green/brightness";
 
 char const*const BUTTON_FILE = "/sys/class/leds/button-backlight/brightness";
 
+#ifdef KEYBOARD
+char const*const KEYBOARD_FILE = "/sys/class/leds/keyboard-backlight/brightness";
+#endif
+
 char const*const AMBER_BLINK_FILE = "/sys/class/leds/amber/blink";
 char const*const GREEN_BLINK_FILE = "/sys/class/leds/green/blink";
 
@@ -209,6 +213,9 @@ static int set_light_buttons (struct light_device_t* dev,
 	int on = is_lit (state);
 	pthread_mutex_lock (&g_lock);
 	err = write_int (BUTTON_FILE, on?255:0);
+#ifdef KEYBOARD
+	err = write_int (KEYBOARD_FILE, on?255:0);
+#endif
 	pthread_mutex_unlock (&g_lock);
 
 	return 0;
