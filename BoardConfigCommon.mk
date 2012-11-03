@@ -68,7 +68,7 @@ TARGET_GRALLOC_USES_ASHMEM := false
 TARGET_USES_GENLOCK := true
 # Disable HW VSYNC, kernel does not support it
 TARGET_NO_HW_VSYNC := true
-# Some pixel formats aren't supported. Commit used with this flag: http://goo.gl/z4F7M
+# Some pixel formats aren't supported. Commit used with this flag: http://goo.gl/91KJ9
 COMMON_GLOBAL_CFLAGS += -DQCOM_MISSING_PIXEL_FORMATS
 
 ### Camera
