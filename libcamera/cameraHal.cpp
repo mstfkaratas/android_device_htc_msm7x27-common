@@ -411,7 +411,11 @@ CameraHAL_GetCam_Info(int camera_id, struct camera_info *info)
    }
    if (!dynamic) {
       info->facing      = CAMERA_FACING_BACK;
+#ifdef CHACHA
+      info->orientation = 0;
+#else
       info->orientation = 90;
+#endif
    }
    return NO_ERROR;
 }
