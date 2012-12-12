@@ -3099,7 +3099,11 @@ extern "C" sp<CameraHardwareInterface> openCameraHardware()
 static CameraInfo sCameraInfo[] = {
 	{
 		CAMERA_FACING_BACK,
+#ifdef CHACHA
+		 0,  /* orientation */
+#else
 		90,  /* orientation */
+#endif
 	}
 };
 
