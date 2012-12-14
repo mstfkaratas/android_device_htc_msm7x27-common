@@ -87,6 +87,7 @@ BOARD_USES_QCOM_AUDIO_RESETALL := true
 ### Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
+BOARD_BLUEDROID_VENDOR_CONF := device/htc/msm7x27-common/bluetooth/btvendor_7x27.txt
 
 ### FM radio
 BOARD_HAVE_FM_RADIO := true
