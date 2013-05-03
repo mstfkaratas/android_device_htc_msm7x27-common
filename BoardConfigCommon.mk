@@ -57,6 +57,7 @@ WIFI_BAND                        := 802_11_ABG
 # Option for choosing texture target on old adrenos
 BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
 BOARD_EGL_CFG := device/htc/msm7x27-common/egl.cfg
+BOARD_EGL_NEEDS_LEGACY_FB := true
 
 COMMON_GLOBAL_CFLAGS += -DREFRESH_RATE=60 -DQCOM_HARDWARE -DQCOM_NO_SECURE_PLAYBACK -DQCOM_LEGACY_OMX
 USE_OPENGL_RENDERER := true
@@ -69,8 +70,11 @@ TARGET_GRALLOC_USES_ASHMEM := false
 TARGET_USES_GENLOCK := true
 # Disable HW VSYNC, kernel does not support it
 TARGET_NO_HW_VSYNC := true
-# Some pixel formats aren't supported. Commit used with this flag: http://goo.gl/91KJ9
+# Some pixel formats aren't supported. Commit used with this flag: http://goo.gl/DjwVN
 COMMON_GLOBAL_CFLAGS += -DQCOM_MISSING_PIXEL_FORMATS
+
+# display-legacy from Arco
+TARGET_QCOM_DISPLAY_VARIANT := legacy
 
 ### Camera
 BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
