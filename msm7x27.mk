@@ -150,6 +150,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mass_storage,adb \
     dalvik.vm.dexopt-data-only=1
 
+# Disable ADB authentication until it works
+ADDITIONAL_DEFAULT_PROPERTIES += ro.adb.secure=0
+
 # We have enough storage space to hold precise GC data
 #PRODUCT_TAGS += dalvik.gc.type-precise
 
