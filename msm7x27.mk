@@ -113,6 +113,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=160 \
     ro.opengles.version=131072 \
+    ro.opengles.surface.rgb565=true \
     debug.sf.hw=1 \
     debug.qctwa.statusbar=1 \
     debug.qctwa.preservebuf=1 \
