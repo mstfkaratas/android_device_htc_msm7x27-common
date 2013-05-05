@@ -159,6 +159,9 @@ PRODUCT_LOCALES += mdpi
 PRODUCT_AAPT_CONFIG := normal mdpi hdpi
 PRODUCT_AAPT_PREF_CONFIG := mdpi
 
+# Make sure this folder exists so display stuff doesn't fail
+$(shell mkdir -p $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/)
+
 # Include Adreno200 vendor blobs
 # http://git.cryptomilk.org/projects/marvel/android_vendor_qcom_msm7x27.git/
 $(call inherit-product-if-exists, vendor/qcom/msm7x27/qcom-vendor.mk)
