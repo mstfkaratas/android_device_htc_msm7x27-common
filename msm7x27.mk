@@ -49,8 +49,8 @@ PRODUCT_COPY_FILES += \
 # Common msm7x27 firmware
 PRODUCT_COPY_FILES += \
     device/htc/msm7x27-common/firmware/bcm4329.hcd:system/etc/firmware/bcm4329.hcd \
-    device/htc/msm7x27-common/firmware/fw_bcm4329.bin:system/vendor/firmware/fw_bcm4329.bin \
-    device/htc/msm7x27-common/firmware/fw_bcm4329_apsta.bin:system/vendor/firmware/fw_bcm4329_apsta.bin
+    device/htc/msm7x27-common/firmware/fw_bcm4329.bin:system/etc/firmware/fw_bcm4329.bin \
+    device/htc/msm7x27-common/firmware/fw_bcm4329_apsta.bin:system/etc/firmware/fw_bcm4329_apsta.bin
 
 # Audio
 PRODUCT_PACKAGES += \
