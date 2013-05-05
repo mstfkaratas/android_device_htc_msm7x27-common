@@ -16,10 +16,6 @@
 
 DEVICE_PACKAGE_OVERLAYS += device/htc/msm7x27-common/overlay
 
-# Fall back to hdpi when mdpi is missing
-PRODUCT_AAPT_CONFIG := normal mdpi hdpi
-PRODUCT_AAPT_PREF_CONFIG := mdpi
-
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
@@ -159,7 +155,8 @@ ADDITIONAL_DEFAULT_PROPERTIES += ro.adb.secure=0
 ### Artwork
 PRODUCT_LOCALES += mdpi
 
-PRODUCT_AAPT_CONFIG := normal mdpi
+# Fall back to hdpi when mdpi is missing
+PRODUCT_AAPT_CONFIG := normal mdpi hdpi
 PRODUCT_AAPT_PREF_CONFIG := mdpi
 
 # Include Adreno200 vendor blobs
