@@ -14,6 +14,9 @@
 
 TARGET_SPECIFIC_HEADER_PATH := device/htc/msm7x27-common/include
 
+# Make sure this folder exists so display stuff doesn't fail
+$(shell mkdir -p $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/)
+
 # inherit from common msm7x27 Recovery
 -include device/htc/msm7x27-recovery/BoardConfigCommon.mk
 
