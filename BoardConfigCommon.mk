@@ -139,4 +139,4 @@ ENABLE_JSC_JIT := true
 ENABLE_WEBGL := true
 
 ### OTA script extras file (build/tools/releasetools)
-TARGET_OTA_EXTRAS_FILE := device/samsung/msm7x27-common/releasetools-extras.txt
+TARGET_OTA_EXTRAS_FILE := device/htc/msm7x27-common/releasetools-extras.txt
