@@ -56,6 +56,10 @@ WIFI_DRIVER_MODULE_ARG           := "firmware_path=/system/etc/firmware/fw_bcm43
 BOARD_WLAN_DEVICE_REV            := bcm4329
 WIFI_BAND                        := 802_11_ABG
 
+### Wi-Fi Hotspot
+BOARD_HAVE_LEGACY_HOSTAPD := true
+BOARD_HOSTAPD_NO_ENTROPY := true
+
 ### Graphics
 # Option for choosing texture target on old adrenos
 BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
